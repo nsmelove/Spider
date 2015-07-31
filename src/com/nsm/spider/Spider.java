@@ -27,6 +27,7 @@ public class Spider implements Runnable{
                     Document document =connection.get();
                     linkData.setTitle(document.title());
                     printLinkData(linkData);
+                    DataBase.saveLinkData(linkData);
                     findTagA(document);
                 }catch (IOException e){
                     System.out.println("invalid url:"+url);
