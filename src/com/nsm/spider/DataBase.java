@@ -40,9 +40,9 @@ public class DataBase {
             preparedStatement.setString(3,linkData.getTitle());
             preparedStatement.setString(4,linkData.getText());
 
-            int resutCount = preparedStatement.executeUpdate();
+            int resultCount = preparedStatement.executeUpdate();
             putConnection(connection);
-            if(resutCount ==1){
+            if(resultCount ==1){
                 return true;
             }else {
                 return false;
@@ -53,17 +53,33 @@ public class DataBase {
         }
 
     }
+    public static boolean updateLinkTitle(String url,String title){
+        try {
+            Connection connection = getConnection();
+            String sql ="UPDATE link_data set title='"+title+"' where url='"+url+"'";
+            Statement statement =connection.createStatement();
+            int resultCount =statement.executeUpdate(sql);
+            putConnection(connection);
+            if(resultCount >=1){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static boolean checkLink(String url){
         try {
             Connection connection = getConnection();
             String sql = "select count(1) from link_data where url ='"+url+"'";
             Statement statement =connection.createStatement();
             ResultSet resultSet =statement.executeQuery(sql);
-            if(resultSet.next()){
-                return true;
-            }else {
-                return false;
-            }
+            putConnection(connection);
+            resultSet.next();
+            long count = resultSet.getLong(1);
+            return count >=1 ? true : false;
         }catch (Exception e){
             e.printStackTrace();
             return false;

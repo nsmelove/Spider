@@ -27,7 +27,7 @@ public class Spider implements Runnable{
                     Document document =connection.get();
                     linkData.setTitle(document.title());
                     printLinkData(linkData);
-                    DataBase.saveLinkData(linkData);
+                    DataBase.updateLinkTitle(url,document.title());
                     findTagA(document);
                 }catch (IOException e){
                     System.out.println("invalid url:"+url);
@@ -41,11 +41,12 @@ public class Spider implements Runnable{
         for(Element childElement:elements){
             if(childElement.tagName().equals("a")){
                 String url = childElement.attr("href");
-                if(Utils.checkUrl(url)){
+                if(Utils.checkUrl(url) && !DataBase.checkLink(url)){
                     LinkData childLinkData = new LinkData();
                     childLinkData.setText(childElement.text());
                     childLinkData.setUrl(url);
                     Manager.pushLinkData(childLinkData);
+                    DataBase.saveLinkData(childLinkData);
                 }
             }else {
                 findTagA(childElement);
