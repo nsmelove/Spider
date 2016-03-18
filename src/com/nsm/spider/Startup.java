@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
  * Created by nsm on 2015/7/23.
  */
 public class Startup {
-   // private static String defaultUrl="http://www.hao123.com/";
-    private static String defaultUrl="http://www.baidu.com/";
+    private static String defaultUrl="http://www.hao123.com/";
+    //private static String defaultUrl="http://www.baidu.com/";
     public static void main(String[] args) {
         System.out.println("program startup !");
         String url = null;
